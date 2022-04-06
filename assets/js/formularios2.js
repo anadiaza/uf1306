@@ -79,6 +79,8 @@ function validarFormulario( enviar ) {
 
         // return false; // validacion sigue siendo FALSE
     }
+    console.log(`Error: ` + error +`\n');
+    console.log( ".......................................");
 
     // Booleano final de la validación (true | false )
     return validacion;
@@ -250,7 +252,8 @@ function validarSoloTexto( elemento ) {
         // copiada de validar solo texto y borre comentarios        
     
         var expRegEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;   
-        var validacion = validarObligatorio( elemento );
+        var validacion = validarObligatorio( email );
+        
     
         switch ( validacion ) {
             case true:
