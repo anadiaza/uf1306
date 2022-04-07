@@ -52,7 +52,9 @@ function validarFormulario( enviar ) {
     var nombre = document.getElementById("name");
     var edad = document.getElementById("edad");
     var email = document.getElementById("email");
+    var tfno = document.getElementById("tfno");
     var mensaje = document.getElementById("mensaje");
+    var edad = document.getElementById("edad");
 
     // Resultado de la validación: por defecto, FALSE
     var validacion = false;
@@ -60,9 +62,10 @@ function validarFormulario( enviar ) {
     // Validamos cada uno de los apartados con llamadas a sus funciones correspondientes.
     if (
         validarSoloTexto( nombre )
-        // && validarNumero( edad, 0, 120 )
+        && validarNumero( edad, 0, 120 )
         && validarEmail( email )
-        // && validarTextarea( mensaje, 3, 255 )       
+        // && validarTextarea( mensaje, 3, 255 )
+        && validarTelefono( tfno )
         && confirm("¿Deseas enviar el formulario con estos datos?")
     ){
         // El código de error 0 Devuelve TRUE ( @return = true )
@@ -79,8 +82,6 @@ function validarFormulario( enviar ) {
 
         // return false; // validacion sigue siendo FALSE
     }
-    console.log(`Error: ` + error +`\n');
-    console.log( ".......................................");
 
     // Booleano final de la validación (true | false )
     return validacion;
@@ -147,7 +148,19 @@ function mensajeError ( error, elemento="", min=0, max=300, id="errores" ) {
         break;
 
         case 3:
-            texto += "Correo electrónico no válido";
+            texto += "no parece una dirección correcta";
+            etiquetaInfo.innerHTML = texto;
+        break;
+
+        case 4:
+            texto += "Teléfono incorrecto";
+            etiquetaInfo.innerHTML = texto;
+        break;
+
+
+        case 5:
+            texto += "El nº debe estar entre:";
+            texto += min +"y" + max;
             etiquetaInfo.innerHTML = texto;
         break;
 
@@ -245,27 +258,84 @@ function validarSoloTexto( elemento ) {
 
     // Se devuelve el resultado de la validación (true | false)
     return validacion;
+}
 
+function validarEmail( elemento ) {
+ 
 
-    function validarEmail( elemento ) {
+    var expresionRegular = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/; 
 
-        // copiada de validar solo texto y borre comentarios        
-    
-        var expRegEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;   
-        var validacion = validarObligatorio( email );
-        
-    
-        switch ( validacion ) {
+    var validacion = validarObligatorio( elemento );
+
+    switch ( validacion ) {
+
             case true:
-                var resultadoExpRegular = expresionRegular.exec( elemento.value );
-                if ( !resultadoExpRegular ) {
-                    validacion = mensajeError( 3, elemento );
-                    
-                }
-            break;
-        }    
-        
-        return validacion;
+            
+            var resultadoExpRegular = expresionRegular.exec( elemento.value );
+            
+            if ( !resultadoExpRegular ) {
+
+                validacion = mensajeError( 3, elemento );
+                
+            }
+        break;
+
+        // Si el valor de 'validacion' es FALSE no hay nada que hacer
+        // case false:
+        //     validacion = false
+        // break;
+
+        // default:
     }
+
+    // Se devuelve el resultado de la validación (true | false)
+    return validacion;
+}
+function validarTelefono( elemento ) {
+ 
+
+    var expionRegTfno = /^[6-9{1}[0-9]{8}$/; 
+
+    var validacion = validarObligatorio( elemento );
+
+    switch ( validacion ) {
+
+            case true:
+            
+            var resultadoExpRegular = expresionRegular.exec( elemento.value );
+            
+            if ( !resultadoExpRegular ) {
+
+                validacion = mensajeError( 4, elemento );
+                
+            }
+        break;
+        
+    }
+
+    return validacion;
+}
+function validarNumero( elemento, min, max, ) {
+ 
+
+    var validacion = true;
+
+
+
+    switch ( validacion ) {
+
+            case true:
+            
+                        
+            if ( elemento.value < min || elemento.value > max ) {
+
+                validacion = mensajeError( 5, elemento, min, max );
+                
+            }
+        break;
+        
+    }
+
+    return validacion;
 }
 
