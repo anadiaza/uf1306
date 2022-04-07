@@ -56,7 +56,7 @@ function validarFormulario() {
     var email = document.getElementById("email");
     var mensaje = document.getElementById("mensaje");
     var edad =  document.getElementById("edad");
-    var edad =  document.getElementById("tfno");
+    var tfno =  document.getElementById("tfno");
 
 
     // Validar con JavaScript que el campo “nombre” no esté vacío
