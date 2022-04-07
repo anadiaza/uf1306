@@ -320,12 +320,9 @@ function validarNumero( elemento, min, max, ) {
 
     var validacion = true;
 
-
-
     switch ( validacion ) {
 
-            case true:
-            
+            case true:            
                         
             if ( elemento.value < min || elemento.value > max ) {
 
